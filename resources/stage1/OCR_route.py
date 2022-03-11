@@ -4,7 +4,8 @@ from pathlib import Path
 
 from flask import Flask, request, jsonify
 from werkzeug.utils import secure_filename
-import cv2
+
+from PIL import Image, UnidentifiedImageError
 
 
 app = Flask(__name__)
@@ -20,12 +21,14 @@ def imgshape():
     width = height = depth = None
 
     with tempfile.TemporaryDirectory() as tmpdirname:
-        # TODO write image to disk (unless you find a better way)
-        # ...
+        # write image to disk (unless you find a better way)
         try:
-            pass
-            # TODO use opencv (headless) or some better choice to read the image and get its shape
-            # ...
+            # use opencv (headless) or some better choice to read the image and get its shape
+            image = Image.open(BytesIO(image_data))
+            width, height = image.size
+            depth = len(image.getbands())
+        except UnidentifiedImageError:
+            return jsonify({"error": "Cannot open image."})
         except Exception as err:
             return jsonify({"error": f"Unknown error: {err}"}), 500
 
