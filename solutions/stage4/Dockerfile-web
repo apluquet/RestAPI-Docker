@@ -11,11 +11,11 @@ RUN pip install --no-cache-dir -r requirements.txt && rm requirements.txt
 
 # We copy the OCR_route.py file later to be able to modify it and rebuild
 # without having to install requirements again.
-COPY sources-web/OCR_route.py sources-ocr/celeryconfig.py ./
+COPY sources-web/OCR_routes.py sources-ocr/celeryconfig.py ./
 
 # Celery configuration
 ENV CELERY_BROKER_URL='amqp://guest:guest@rabbitmq:5672/'
 ENV CELERY_RESULT_BACKEND='rpc://'
 ENV C_FORCE_ROOT='true'
 
-CMD ["gunicorn", "-b", "0.0.0.0:8000", "OCR_route:app"]
+CMD ["gunicorn", "-b", "0.0.0.0:8000", "OCR_routes:app"]

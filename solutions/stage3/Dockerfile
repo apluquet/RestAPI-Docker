@@ -26,4 +26,4 @@ ADD https://download.pytorch.org/models/vgg16-397923af.pth /root/.cache/torch/hu
 # without having to install requirements again.
 COPY sources/*.py ./
 
-CMD ["gunicorn", "-b", "0.0.0.0:8000", "OCR_route:app"]
+CMD ["gunicorn", "-b", "0.0.0.0:8000", "OCR_routes:app"]
