@@ -7,7 +7,7 @@ COPY sources/requirements.txt .
 
 # We do not run pip update as we want to install a specific version of our
 # requirements, which is already know by pip.
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 # We copy the OCR_route.py file later to be able to modify it and rebuild
 # without having to install requirements again.

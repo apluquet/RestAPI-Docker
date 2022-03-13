@@ -2,7 +2,7 @@
 FROM python:3.9-slim-bullseye
 
 # Download and install Pero OCR
-RUN pip install https://github.com/jchazalon/pero-ocr/archive/refs/heads/master.zip
+RUN pip install --no-cache-dir https://github.com/jchazalon/pero-ocr/archive/refs/heads/master.zip
 
 WORKDIR /app
 
@@ -18,7 +18,7 @@ COPY requirements.txt .
 
 # We do not run pip update as we want to install a specific version of our
 # requirements, which is already know by pip.
-RUN pip install -r requirements.txt && rm requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt && rm requirements.txt
 
 ADD https://download.pytorch.org/models/vgg16-397923af.pth /root/.cache/torch/hub/checkpoints/vgg16-397923af.pth
 
