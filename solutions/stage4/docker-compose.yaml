@@ -1,0 +1,18 @@
+version: "3"
+services:
+  web:
+    ports:
+      - "8000:8000"
+    build:
+      context: .
+      dockerfile: Dockerfile-web
+  rabbitmq:
+    image: rabbitmq:3.9.13-alpine
+    container_name: rabbitmq
+    ports: 
+     - "5672:5672"
+  ocr:
+    build: 
+      context: ./sources-ocr/
+      dockerfile: ../Dockerfile-ocr
+

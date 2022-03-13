@@ -1,0 +1,21 @@
+# Small python image
+FROM python:3.9-slim-bullseye
+
+COPY sources-web/requirements.txt .
+
+# We do not run pip update as we want to install a specific version of our
+# requirements, which is already know by pip.
+RUN pip install -r requirements.txt && rm requirements.txt
+
+# We copy the OCR_route.py file later to be able to modify it and rebuild
+# without having to install requirements again.
+COPY sources-web/OCR_route.py ./
+
+# Celery configuration
+ENV CELERY_BROKER_URL='amqp://guest:guest@rabbitmq:5672/'
+ENV CELERY_RESULT_BACKEND='rpc://'
+ENV C_FORCE_ROOT='true'
+
+COPY sources-ocr/celeryconfig.py .
+
+CMD ["gunicorn", "-b", "0.0.0.0:8000", "OCR_route:app"]
